@@ -1,0 +1,10 @@
+worker.js
+wrangler.jsonc
+functions/
+schema.sql
+README.md
+README.txt
+IMAGE-CREDITS.txt
+.github/
+.gitignore
+.assetsignore
