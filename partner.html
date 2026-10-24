@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Become an ELROHI Connection partner and help strengthen youth, families and future leaders." />
+  <title>Become a Partner | ELROHI Connection</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="resource-page">
+  <div class="page-loader" id="loader"><span>ELROHI</span></div>
+  <header class="site-header" id="top">
+    <a class="brand" href="index.html#home" aria-label="ELROHI Connection home"><img src="assets/logo.webp" alt="ELROHI Connection" /></a>
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a href="index.html#about">About</a><a href="index.html#programs">Programs</a><a href="index.html#partnership">Partnership</a><a href="index.html#resources">Resources</a><a href="index.html#contact">Contact</a>
+    </nav>
+    <div class="header-actions"><a href="partner.html" class="text-link">Partner With Us <span>↗</span></a><button class="menu-button" id="menuButton" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><b>Menu</b></button></div>
+  </header>
+
+  <aside class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="menu-panel"><button class="menu-close" id="menuClose" aria-label="Close menu">×</button><p class="eyebrow">ELROHI CONNECTION</p>
+      <nav><a href="index.html#home">Home <small>01</small></a><a href="index.html#about">About <small>02</small></a><a href="index.html#programs">Programs <small>03</small></a><a href="index.html#partnership">Partnership <small>04</small></a><a href="index.html#resources">Resources <small>05</small></a><a href="index.html#contact">Contact <small>06</small></a></nav>
+      <div class="menu-meta"><span>Hopkins, Minnesota</span><a href="mailto:info@elrohiconnection.org">info@elrohiconnection.org</a></div>
+    </div>
+  </aside>
+
+  <main>
+    <section class="partner-form-hero">
+      <div class="partner-form-intro reveal">
+        <div class="resource-breadcrumb"><a href="index.html#partnership">Partnership</a><span>→</span><strong>Become a Partner</strong></div>
+        <p class="eyebrow light">BUILD WITH US</p>
+        <h1>Let’s create stronger futures <em>together.</em></h1>
+        <p>Tell us a little about yourself or your organisation and how you would like to partner with ELROHI Connection. Our team can then follow up with you directly.</p>
+        <div class="partner-benefits">
+          <div><b>01</b><span>Youth mentoring programs</span></div><div><b>02</b><span>Family strengthening workshops</span></div><div><b>03</b><span>STEM with Purpose training</span></div><div><b>04</b><span>Leadership seminars</span></div>
+        </div>
+      </div>
+      <div class="partner-form-wrap reveal delay-1">
+        <form id="partnerForm" class="partner-form" novalidate>
+          <div class="form-heading"><span>PARTNER INTEREST FORM</span><h2>Tell us about your interest.</h2><p>Fields marked * are required.</p></div>
+          <div class="form-grid">
+            <label><span>Full name *</span><input type="text" name="full_name" autocomplete="name" required maxlength="120"></label>
+            <label><span>Email address *</span><input type="email" name="email" autocomplete="email" required maxlength="180"></label>
+            <label><span>Phone number</span><input type="tel" name="phone" autocomplete="tel" maxlength="60"></label>
+            <label><span>Organisation / Church / School</span><input type="text" name="organization" maxlength="180"></label>
+            <label><span>City</span><input type="text" name="city" autocomplete="address-level2" maxlength="120"></label>
+            <label><span>Country *</span><input type="text" name="country" autocomplete="country-name" required maxlength="120"></label>
+            <label class="full"><span>Area of partnership *</span><select name="interest" required><option value="">Choose an area</option><option>Youth Mentoring Programs</option><option>Family Strengthening Workshops</option><option>STEM with Purpose Training</option><option>Leadership Seminars</option><option>Financial / Resource Support</option><option>Volunteer / Professional Skills</option><option>Other</option></select></label>
+            <label class="full"><span>How would you like to partner with ELROHI?</span><textarea name="message" rows="5" maxlength="1500" placeholder="Briefly tell us what you have in mind..."></textarea></label>
+          </div>
+          <label class="consent"><input type="checkbox" name="consent" required><span>I consent to ELROHI Connection using the information provided to contact me about this partnership enquiry. *</span></label>
+          <div class="form-actions"><button type="submit" class="partner-submit">Submit Partnership Interest <span>↗</span></button><p id="partnerStatus" class="form-status" role="status" aria-live="polite"></p></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="footer-brand"><img src="assets/logo.webp" alt="ELROHI Connection"><p>Seen. Healed. Restored.</p></div><div class="footer-nav"><a href="index.html#about">About</a><a href="index.html#programs">Programs</a><a href="index.html#partnership">Partnership</a><a href="index.html#resources">Resources</a><a href="index.html#contact">Contact</a><a href="admin.html" class="admin-footer-link">Admin</a></div><div class="footer-bottom"><span>© 2026 ELROHI CONNECTION. All Rights Reserved.</span><a href="#top">Back to top ↑</a></div></footer>
+  <script src="script.js"></script><script src="partner.js"></script>
+</body>
+</html>
