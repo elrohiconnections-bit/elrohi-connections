@@ -1,2 +1,0 @@
-ELROHI automatic deployment is active.
-Deployment verification marker: 2026-10-24
