@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Admin | ELROHI Connection</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="admin-page">
+  <main class="admin-shell">
+    <aside class="admin-sidebar">
+      <a href="index.html" class="admin-logo"><img src="assets/logo.webp" alt="ELROHI Connection"></a>
+      <p class="admin-label">ADMIN ACCESS</p>
+      <nav class="admin-tabs" aria-label="Admin sections">
+        <button class="admin-tab active" data-tab="partners"><span>01</span> Partner List</button>
+        <button class="admin-tab" data-tab="reset"><span>02</span> Reset</button>
+      </nav>
+      <a href="index.html" class="admin-back">← Back to website</a>
+    </aside>
+
+    <section class="admin-main">
+      <div id="adminLogin" class="admin-login-card">
+        <p class="eyebrow">SECURE AREA</p><h1>Admin access</h1><p>Enter the administrator access key to view partnership submissions.</p>
+        <form id="adminLoginForm"><label><span>Admin access key</span><input id="adminKey" type="password" autocomplete="current-password" required></label><button type="submit">Open Admin <span>→</span></button></form>
+        <p id="previewAdminNote" class="admin-preview-note" hidden>Local preview mode: use <strong>preview</strong> as the access key.</p>
+        <p id="adminLoginStatus" class="form-status" role="status" aria-live="polite"></p>
+      </div>
+
+      <div id="adminDashboard" class="admin-dashboard" hidden>
+        <header class="admin-header"><div><p class="eyebrow">PARTNERSHIP ADMIN</p><h1>Partner submissions</h1></div><div class="admin-header-actions"><button id="refreshPartners" class="admin-secondary">Refresh</button><button id="adminLogout" class="admin-secondary">Log out</button></div></header>
+
+        <section id="partnersPanel" class="admin-panel active-panel">
+          <div class="admin-stats"><div><small>TOTAL SUBMISSIONS</small><strong id="partnerCount">0</strong></div><div><small>LATEST SUBMISSION</small><strong id="latestSubmission">—</strong></div></div>
+          <div class="admin-toolbar"><div><h2>Potential partners</h2><p>Form submissions appear here automatically.</p></div><button id="exportPartners" class="admin-secondary">Export CSV</button></div>
+          <div id="partnerTableWrap" class="partner-table-wrap"><div class="admin-empty">No partnership submissions yet.</div></div>
+        </section>
+
+        <section id="resetPanel" class="admin-panel">
+          <div class="reset-card"><p class="eyebrow">RESET PARTNER LIST</p><h2>Clear all partnership submissions</h2><p>This permanently removes every partner enquiry currently stored in the website database. This action cannot be undone.</p><label><span>Type <strong>RESET</strong> to confirm</span><input id="resetConfirm" type="text" autocomplete="off" placeholder="RESET"></label><button id="resetPartners" class="danger-button" disabled>Clear Partner List</button><p id="resetStatus" class="form-status" role="status" aria-live="polite"></p></div>
+        </section>
+      </div>
+    </section>
+  </main>
+  <script src="admin.js"></script>
+</body>
+</html>
