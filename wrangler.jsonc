@@ -1,8 +1,13 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "elrohi-connections",
-  "pages_build_output_dir": ".",
+  "main": "./worker.js",
   "compatibility_date": "2026-10-24",
+  "assets": {
+    "directory": ".",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  },
   "d1_databases": [
     {
       "binding": "DB",
