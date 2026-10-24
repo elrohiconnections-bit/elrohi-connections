@@ -1,8 +1,17 @@
 const json = (data, status=200) => new Response(JSON.stringify(data), {status, headers:{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'}});
 const clean = (v, max=500) => typeof v === 'string' ? v.trim().slice(0,max) : '';
-function isAdmin(request, env){
+const ADMIN_KEY_SHA256 = '2e76eae88aeb0fd2e4915852c29024510190a9ed38c121e497cbd9808c9788a3';
+
+async function sha256Hex(value){
+  const bytes = new TextEncoder().encode(value);
+  const hash = await crypto.subtle.digest('SHA-256', bytes);
+  return [...new Uint8Array(hash)].map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+async function isAdmin(request, env){
   const supplied = request.headers.get('X-Admin-Key') || '';
-  return Boolean(env.ADMIN_KEY && supplied && supplied === env.ADMIN_KEY);
+  if (!supplied) return false;
+  if (env.ADMIN_KEY) return supplied === env.ADMIN_KEY;
+  return (await sha256Hex(supplied)) === ADMIN_KEY_SHA256;
 }
 
 export async function onRequestPost(context){
@@ -25,7 +34,7 @@ export async function onRequestPost(context){
 
 export async function onRequestGet(context){
   const {request, env} = context;
-  if(!isAdmin(request,env)) return json({error:'Unauthorized.'},401);
+  if(!(await isAdmin(request,env))) return json({error:'Unauthorized.'},401);
   if(!env.DB) return json({error:'Partner database is not configured.'},500);
   const {results=[]} = await env.DB.prepare(`SELECT id,full_name,email,phone,organization,city,country,interest,message,submitted_at FROM partner_submissions ORDER BY id DESC LIMIT 1000`).all();
   return json({items:results});
@@ -33,7 +42,7 @@ export async function onRequestGet(context){
 
 export async function onRequestDelete(context){
   const {request, env} = context;
-  if(!isAdmin(request,env)) return json({error:'Unauthorized.'},401);
+  if(!(await isAdmin(request,env))) return json({error:'Unauthorized.'},401);
   if(!env.DB) return json({error:'Partner database is not configured.'},500);
   await env.DB.prepare('DELETE FROM partner_submissions').run();
   return json({ok:true});
