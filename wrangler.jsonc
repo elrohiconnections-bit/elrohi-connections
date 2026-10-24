@@ -1,0 +1,13 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "elrohi-connections",
+  "pages_build_output_dir": ".",
+  "compatibility_date": "2026-10-24",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "elrohi-partners",
+      "database_id": "d425926b-f687-416b-a26d-9f11a07e6026"
+    }
+  ]
+}
