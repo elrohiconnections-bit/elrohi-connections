@@ -47,35 +47,84 @@
 
         <section id="resourcesPanel" class="admin-panel">
           <div class="admin-toolbar resource-admin-toolbar">
-            <div><h2>Resource library</h2><p>Manage public resources under Mentorship Guide, Family Support and Leadership &amp; STEM.</p></div>
+            <div><h2>Resource library</h2><p>Manage and upload resources for Mentorship Guide, Family Support and Leadership &amp; STEM.</p></div>
           </div>
 
-          <div class="resource-category-tabs" id="resourceCategoryTabs">
-            <button class="active" data-category="mentorship-guide">Mentorship Guide</button>
-            <button data-category="family-support">Family Support</button>
-            <button data-category="leadership-stem">Leadership &amp; STEM</button>
+          <div class="resource-mode-tabs" id="resourceModeTabs" role="tablist" aria-label="Resource management options">
+            <button class="active" type="button" data-mode="manage">Manage Resources</button>
+            <button type="button" data-mode="upload">Upload Document</button>
           </div>
 
-          <div class="resource-admin-grid">
-            <form id="resourceForm" class="resource-editor-card">
-              <input type="hidden" id="resourceId">
-              <div class="resource-editor-head"><div><p class="eyebrow">RESOURCE EDITOR</p><h3 id="resourceFormTitle">Add resource</h3></div><button type="button" id="cancelResourceEdit" class="admin-secondary" hidden>Cancel edit</button></div>
+          <div id="resourceManageView" class="resource-mode-view">
+            <div class="resource-category-tabs" id="resourceCategoryTabs">
+              <button class="active" data-category="mentorship-guide">Mentorship Guide</button>
+              <button data-category="family-support">Family Support</button>
+              <button data-category="leadership-stem">Leadership &amp; STEM</button>
+            </div>
 
-              <label><span>Category</span><select id="resourceCategory" required><option value="mentorship-guide">Mentorship Guide</option><option value="family-support">Family Support</option><option value="leadership-stem">Leadership &amp; STEM</option></select></label>
-              <label><span>Library section</span><select id="resourceSection" required></select></label>
-              <label><span>Resource type</span><select id="resourceKind" required><option value="document">Document / Guide</option><option value="video">Video / Teaching</option><option value="link">External Link</option></select></label>
-              <label><span>Title</span><input id="resourceTitle" maxlength="180" required></label>
-              <label><span>Description</span><textarea id="resourceDescription" rows="4" maxlength="1200" placeholder="Short description shown to visitors"></textarea></label>
-              <label><span>Resource URL</span><input id="resourceUrl" type="text" maxlength="1000" placeholder="https://... or /path/to/file.pdf" required></label>
-              <div class="resource-editor-row"><label><span>Button label</span><input id="resourceButtonLabel" maxlength="80" placeholder="Open resource"></label><label><span>Display order</span><input id="resourceSortOrder" type="number" value="0" min="-9999" max="9999"></label></div>
-              <label class="resource-publish-check"><input id="resourcePublished" type="checkbox" checked><span>Published — visible on the public resource page</span></label>
-              <button type="submit" class="resource-save-button" id="saveResource">Save Resource</button>
-              <p id="resourceFormStatus" class="form-status" role="status" aria-live="polite"></p>
-            </form>
+            <div class="resource-admin-grid">
+              <form id="resourceForm" class="resource-editor-card">
+                <input type="hidden" id="resourceId">
+                <div class="resource-editor-head"><div><p class="eyebrow">RESOURCE EDITOR</p><h3 id="resourceFormTitle">Add resource by link</h3></div><button type="button" id="cancelResourceEdit" class="admin-secondary" hidden>Cancel edit</button></div>
 
-            <div class="resource-list-card">
-              <div class="resource-list-head"><div><p class="eyebrow">CURRENT LIBRARY</p><h3 id="resourceListTitle">Mentorship Guide</h3></div><strong id="resourceCount">0</strong></div>
-              <div id="resourceList" class="resource-admin-list"><div class="admin-empty">No resources have been added yet.</div></div>
+                <label><span>Category</span><select id="resourceCategory" required><option value="mentorship-guide">Mentorship Guide</option><option value="family-support">Family Support</option><option value="leadership-stem">Leadership &amp; STEM</option></select></label>
+                <label><span>Library section</span><select id="resourceSection" required></select></label>
+                <label><span>Resource type</span><select id="resourceKind" required><option value="document">Document / Guide</option><option value="video">Video / Teaching</option><option value="link">External Link</option></select></label>
+                <label><span>Title</span><input id="resourceTitle" maxlength="180" required></label>
+                <label><span>Description</span><textarea id="resourceDescription" rows="4" maxlength="1200" placeholder="Short description shown to visitors"></textarea></label>
+                <label><span>Resource URL</span><input id="resourceUrl" type="text" maxlength="1000" placeholder="https://... or /path/to/file.pdf" required></label>
+                <div class="resource-editor-row"><label><span>Button label</span><input id="resourceButtonLabel" maxlength="80" placeholder="Open resource"></label><label><span>Display order</span><input id="resourceSortOrder" type="number" value="0" min="-9999" max="9999"></label></div>
+                <label class="resource-publish-check"><input id="resourcePublished" type="checkbox" checked><span>Published — visible on the public resource page</span></label>
+                <button type="submit" class="resource-save-button" id="saveResource">Save Resource</button>
+                <p id="resourceFormStatus" class="form-status" role="status" aria-live="polite"></p>
+              </form>
+
+              <div class="resource-list-card">
+                <div class="resource-list-head"><div><p class="eyebrow">CURRENT LIBRARY</p><h3 id="resourceListTitle">Mentorship Guide</h3></div><strong id="resourceCount">0</strong></div>
+                <div id="resourceList" class="resource-admin-list"><div class="admin-empty">No resources have been added yet.</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div id="resourceUploadView" class="resource-mode-view" hidden>
+            <div class="resource-upload-shell">
+              <form id="resourceUploadForm" class="resource-upload-card" enctype="multipart/form-data">
+                <div class="resource-editor-head">
+                  <div><p class="eyebrow">DOCUMENT UPLOAD</p><h3>Upload a resource</h3></div>
+                  <span class="upload-storage-badge">Cloudflare R2</span>
+                </div>
+                <p class="resource-upload-intro">Upload a document once, assign it to any ELROHI resource category, and publish it directly to the website library.</p>
+
+                <div class="resource-upload-drop">
+                  <label for="uploadFile"><span>Choose document</span><strong>Browse from this computer</strong><small>PDF, Word, PowerPoint, Excel, text, CSV or OpenDocument · Maximum 25 MB</small></label>
+                  <input id="uploadFile" name="file" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.rtf,.csv,.odt,.ods,.odp" required>
+                  <p id="uploadFileSummary">No document selected.</p>
+                </div>
+
+                <div class="resource-upload-fields">
+                  <label><span>Resource category</span><select id="uploadCategory" required><option value="mentorship-guide">Mentorship Guide</option><option value="family-support">Family Support</option><option value="leadership-stem">Leadership &amp; STEM</option></select></label>
+                  <label><span>Library section</span><select id="uploadSection" required></select></label>
+                  <label class="full"><span>Title</span><input id="uploadTitle" maxlength="180" placeholder="Leave blank to use the document filename"></label>
+                  <label class="full"><span>Description</span><textarea id="uploadDescription" rows="4" maxlength="1200" placeholder="Short description shown to visitors"></textarea></label>
+                  <label><span>Button label</span><input id="uploadButtonLabel" maxlength="80" value="Open document"></label>
+                  <label><span>Display order</span><input id="uploadSortOrder" type="number" value="0" min="-9999" max="9999"></label>
+                </div>
+
+                <label class="resource-publish-check upload-publish-check"><input id="uploadPublished" type="checkbox" checked><span>Publish immediately — visible on the selected public resource page</span></label>
+                <button type="submit" class="resource-save-button resource-upload-button" id="uploadResource">Upload &amp; Save Resource</button>
+                <p id="uploadStatus" class="form-status" role="status" aria-live="polite"></p>
+              </form>
+
+              <aside class="resource-upload-help">
+                <p class="eyebrow">HOW IT WORKS</p>
+                <h3>One upload for all three libraries.</h3>
+                <ol>
+                  <li><strong>Choose a document.</strong><span>Select the file from your computer.</span></li>
+                  <li><strong>Choose where it belongs.</strong><span>Mentorship Guide, Family Support, or Leadership &amp; STEM.</span></li>
+                  <li><strong>Publish.</strong><span>The website creates the resource link automatically.</span></li>
+                </ol>
+                <p class="upload-security-note">Only an authenticated administrator can upload documents. Draft documents are stored but are not available through the public resource library until published.</p>
+              </aside>
             </div>
           </div>
         </section>
