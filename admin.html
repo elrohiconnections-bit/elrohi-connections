@@ -13,22 +13,31 @@
       <a href="index.html" class="admin-logo"><img src="assets/logo.webp" alt="ELROHI Connection"></a>
       <p class="admin-label">ADMIN ACCESS</p>
       <nav class="admin-tabs" aria-label="Admin sections">
-        <button class="admin-tab active" data-tab="partners"><span>01</span> Partner List</button>
-        <button class="admin-tab" data-tab="reset"><span>02</span> Reset</button>
+        <button class="admin-tab active" data-tab="partners"><span>01</span> Partners</button>
+        <button class="admin-tab" data-tab="resources"><span>02</span> Resources</button>
+        <button class="admin-tab" data-tab="reset"><span>03</span> Reset</button>
       </nav>
       <a href="index.html" class="admin-back">← Back to website</a>
     </aside>
 
     <section class="admin-main">
       <div id="adminLogin" class="admin-login-card">
-        <p class="eyebrow">SECURE AREA</p><h1>Admin access</h1><p>Enter the administrator access key to view partnership submissions.</p>
-        <form id="adminLoginForm"><label><span>Admin access key</span><input id="adminKey" type="password" autocomplete="current-password" required></label><button type="submit">Open Admin <span>→</span></button></form>
+        <p class="eyebrow">SECURE AREA</p>
+        <h1>Admin access</h1>
+        <p>Enter the administrator access key to manage partnership submissions and ELROHI resources.</p>
+        <form id="adminLoginForm">
+          <label><span>Admin access key</span><input id="adminKey" type="password" autocomplete="current-password" required></label>
+          <button type="submit">Open Admin <span>→</span></button>
+        </form>
         <p id="previewAdminNote" class="admin-preview-note" hidden>Local preview mode: use <strong>preview</strong> as the access key.</p>
         <p id="adminLoginStatus" class="form-status" role="status" aria-live="polite"></p>
       </div>
 
       <div id="adminDashboard" class="admin-dashboard" hidden>
-        <header class="admin-header"><div><p class="eyebrow">PARTNERSHIP ADMIN</p><h1>Partner submissions</h1></div><div class="admin-header-actions"><button id="refreshPartners" class="admin-secondary">Refresh</button><button id="adminLogout" class="admin-secondary">Log out</button></div></header>
+        <header class="admin-header">
+          <div><p class="eyebrow">ELROHI ADMIN</p><h1 id="adminPageTitle">Partner submissions</h1></div>
+          <div class="admin-header-actions"><button id="refreshAdmin" class="admin-secondary">Refresh</button><button id="adminLogout" class="admin-secondary">Log out</button></div>
+        </header>
 
         <section id="partnersPanel" class="admin-panel active-panel">
           <div class="admin-stats"><div><small>TOTAL SUBMISSIONS</small><strong id="partnerCount">0</strong></div><div><small>LATEST SUBMISSION</small><strong id="latestSubmission">—</strong></div></div>
@@ -36,8 +45,43 @@
           <div id="partnerTableWrap" class="partner-table-wrap"><div class="admin-empty">No partnership submissions yet.</div></div>
         </section>
 
+        <section id="resourcesPanel" class="admin-panel">
+          <div class="admin-toolbar resource-admin-toolbar">
+            <div><h2>Resource library</h2><p>Manage public resources under Mentorship Guide, Family Support and Leadership &amp; STEM.</p></div>
+          </div>
+
+          <div class="resource-category-tabs" id="resourceCategoryTabs">
+            <button class="active" data-category="mentorship-guide">Mentorship Guide</button>
+            <button data-category="family-support">Family Support</button>
+            <button data-category="leadership-stem">Leadership &amp; STEM</button>
+          </div>
+
+          <div class="resource-admin-grid">
+            <form id="resourceForm" class="resource-editor-card">
+              <input type="hidden" id="resourceId">
+              <div class="resource-editor-head"><div><p class="eyebrow">RESOURCE EDITOR</p><h3 id="resourceFormTitle">Add resource</h3></div><button type="button" id="cancelResourceEdit" class="admin-secondary" hidden>Cancel edit</button></div>
+
+              <label><span>Category</span><select id="resourceCategory" required><option value="mentorship-guide">Mentorship Guide</option><option value="family-support">Family Support</option><option value="leadership-stem">Leadership &amp; STEM</option></select></label>
+              <label><span>Library section</span><select id="resourceSection" required></select></label>
+              <label><span>Resource type</span><select id="resourceKind" required><option value="document">Document / Guide</option><option value="video">Video / Teaching</option><option value="link">External Link</option></select></label>
+              <label><span>Title</span><input id="resourceTitle" maxlength="180" required></label>
+              <label><span>Description</span><textarea id="resourceDescription" rows="4" maxlength="1200" placeholder="Short description shown to visitors"></textarea></label>
+              <label><span>Resource URL</span><input id="resourceUrl" type="text" maxlength="1000" placeholder="https://... or /path/to/file.pdf" required></label>
+              <div class="resource-editor-row"><label><span>Button label</span><input id="resourceButtonLabel" maxlength="80" placeholder="Open resource"></label><label><span>Display order</span><input id="resourceSortOrder" type="number" value="0" min="-9999" max="9999"></label></div>
+              <label class="resource-publish-check"><input id="resourcePublished" type="checkbox" checked><span>Published — visible on the public resource page</span></label>
+              <button type="submit" class="resource-save-button" id="saveResource">Save Resource</button>
+              <p id="resourceFormStatus" class="form-status" role="status" aria-live="polite"></p>
+            </form>
+
+            <div class="resource-list-card">
+              <div class="resource-list-head"><div><p class="eyebrow">CURRENT LIBRARY</p><h3 id="resourceListTitle">Mentorship Guide</h3></div><strong id="resourceCount">0</strong></div>
+              <div id="resourceList" class="resource-admin-list"><div class="admin-empty">No resources have been added yet.</div></div>
+            </div>
+          </div>
+        </section>
+
         <section id="resetPanel" class="admin-panel">
-          <div class="reset-card"><p class="eyebrow">RESET PARTNER LIST</p><h2>Clear all partnership submissions</h2><p>This permanently removes every partner enquiry currently stored in the website database. This action cannot be undone.</p><label><span>Type <strong>RESET</strong> to confirm</span><input id="resetConfirm" type="text" autocomplete="off" placeholder="RESET"></label><button id="resetPartners" class="danger-button" disabled>Clear Partner List</button><p id="resetStatus" class="form-status" role="status" aria-live="polite"></p></div>
+          <div class="reset-card"><p class="eyebrow">RESET PARTNER LIST</p><h2>Clear all partnership submissions</h2><p>This permanently removes every partner enquiry currently stored in the website database. Resource-library items are not affected.</p><label><span>Type <strong>RESET</strong> to confirm</span><input id="resetConfirm" type="text" autocomplete="off" placeholder="RESET"></label><button id="resetPartners" class="danger-button" disabled>Clear Partner List</button><p id="resetStatus" class="form-status" role="status" aria-live="polite"></p></div>
         </section>
       </div>
     </section>
