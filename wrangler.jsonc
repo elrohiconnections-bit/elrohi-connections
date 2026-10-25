@@ -14,5 +14,11 @@
       "database_name": "elrohi-partners",
       "database_id": "d425926b-f687-416b-a26d-9f11a07e6026"
     }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "RESOURCE_FILES",
+      "bucket_name": "elrohi-resources"
+    }
   ]
 }
